@@ -2,10 +2,22 @@ import { Typography, Divider } from 'antd';
 import './App.css';
 import TodoList from './components/TodoList';
 import Filters from './components/Filters';
+import { setupServer } from './fakeAPIs';
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { fetchTodosThunk } from './components/TodoList/TodosSlice';
+
+if (process.env.NODE_ENV === 'development') {
+  setupServer()
+}
 
 const { Title } = Typography;
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchTodosThunk())
+  }, [])
   return (
     <div
       style={{
